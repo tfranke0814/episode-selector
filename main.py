@@ -1,4 +1,4 @@
-import requests, os, random
+import requests, os, random, time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -56,6 +56,7 @@ def main():
             podcast_id = podcast_mapping.get(podcast)
         else: 
             print("Invalid Choice")
+            time.sleep(1)
     
     try: # Retrieves podcast episode count and returns random episode
         res = requests.get(f"https://api.spotify.com/v1/shows/{podcast_id}", # type: ignore
@@ -71,8 +72,11 @@ def main():
     except Exception as e:
         return print(f"An unexpected eror occurred: {e}")
     
-    print(f"""Try this episode: {ep['name']}
+    print(f"""
+Try this episode: {ep['name']}
+          
 Link: {ep['external_urls']['spotify']}
+
 Description: {ep['description']}""")
 
 if __name__ == "__main__":
